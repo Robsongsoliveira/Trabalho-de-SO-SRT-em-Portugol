@@ -1,0 +1,62 @@
+//Código do Trabalho:
+programa {
+  funcao inicio() {
+    inteiro numProcessos, i, tempo = 0, tempoTotal = 0, ultimaChegada = -1, ultimaChegadaPos = -1
+    logico mudado = verdadeiro
+    cadeia nomes[15]
+    inteiro temposUso[15], temposChegada[15]
+
+    escreva("Insira o número de Processos: ")
+    leia(numProcessos)
+
+    para(i = 0; i < numProcessos; i++){
+      escreva("Insira o nome do Processo: ")
+      leia(nomes[i])
+    
+      escreva("Insira o tempo de uso do Processo: ")
+      leia(temposUso[i])
+      tempoTotal = tempoTotal + temposUso [i]
+
+      escreva("Insira o tempo de chegada do Processo: ")
+      leia(temposChegada[i])
+      se(temposChegada[i] > ultimaChegada){
+      	ultimaChegada = temposChegada[i]
+      	ultimaChegadaPos = i
+      }
+    }
+
+    se(ultimaChegada + temposUso[ultimaChegadaPos] > tempoTotal){
+    	 tempoTotal = ultimaChegada + temposUso[ultimaChegadaPos]
+    }
+
+    escreva("\nProcessos inseridos:\n")
+    para(i = 0; i < numProcessos; i++){
+      escreva("Nome: ", nomes[i], " Tempo de Uso: ", temposUso[i], " Tempo de Chegada: ", temposChegada[i], "\n")
+    }
+    escreva("\n")
+
+    enquanto(tempo < tempoTotal){
+      inteiro menorPos, menorTempo = -1
+      menorPos = -1
+    	 mudado = falso
+
+      para(i = 0; i < numProcessos; i++){
+        se(temposChegada[i] <= tempo e temposUso[i] > 0){
+          se(temposUso[i] <= menorTempo ou menorTempo == -1){
+            menorPos = i
+            menorTempo = temposUso[i]
+          }
+        }
+      }
+      se (menorPos == -1) { 
+      	escreva ("Tempo: ", tempo, " - nenhum processo \n")
+      }
+      senao {
+
+      	escreva("Tempo: ", tempo, " - Processo: ", nomes [menorPos], "\n")
+      	temposUso [menorPos] --
+      }
+      tempo++
+    }
+  }
+}
